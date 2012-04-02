@@ -17,10 +17,17 @@ class NumberPatternSuite extends FunSuite{
         assert(np.hammingDist(np.pattern("2"),np.pattern("4")) == 17)
     }
 
-    val npInstance = new NumberPattern(Math.pow(2,25).toInt - 1)
+    /* 25桁時のテスト */
+    val maxSize = 25
+    
+	test(""" NumberPattern toBin method (id=2^25-1) test"""){
+        val maxId = Math.pow(2,maxSize).toInt - 1
+        assert(np.toBin(maxId).reduceLeft(_ + _) == 25.0)
+    }
 
-	test(""" create NumberPattern Instance (id=2^25-1) test"""){
-        assert(npInstance.toBin.reduceLeft(_ + _) == 25.0)
+	test(""" NumberPattern toBin method (id=1) test"""){
+        assert(np.toBin(1).reduceLeft(_ + _) == 1.0)
+        assert(np.toBin(1).apply(maxSize-1) == 1.0)
     }
 }
 
