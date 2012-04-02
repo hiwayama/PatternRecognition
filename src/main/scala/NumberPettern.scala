@@ -13,8 +13,6 @@ class NumberPattern {
         case p:Some[Map[String,List[Double]]] => p.get
     }
 
-    println(hammingDist(pattern("zero"),pattern("one")))
-
     def hammingDist(pattern1:List[Double],pattern2:List[Double]):Int={
         pattern1.zip(pattern2).filter(p=>p._1 != p._2).size
     }
