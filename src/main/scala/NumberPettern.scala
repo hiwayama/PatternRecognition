@@ -5,7 +5,7 @@ import scala.io.Source
 
 class NumberPattern {
 
-    val jsonFileName = ".src/number.json"
+    val jsonFileName = "./src/number.json"
 
     val stream:String = Source.fromFile(jsonFileName).getLines().toList.foldLeft(new StringBuilder("")){(s,a)=>s.append(a+"\n")}.toString
 
