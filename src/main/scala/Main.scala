@@ -2,7 +2,7 @@ package main.scala
 
 object Main {
     def main(args:Array[String]){
-        val n = new NumberPattern
+        val n = NumberPattern
     }
 }
 
