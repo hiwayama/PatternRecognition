@@ -1,6 +1,6 @@
-package main.scala.exp1
+package scala.main.exp1
 
-import main.scala.NumberPattern
+import scala.main.NumberPattern
 import scala.collection.mutable.Map
 
 object Exp1 {
@@ -12,6 +12,7 @@ object Exp1 {
     
 
     def main(args:Array[String]){
+        println("1 (1)")
         //ハミング距離が最大・最小の組み合わせを表示
         val max = results.maxBy(_._3)
         println("max:%d (%d-%d)".format(max._3,max._1,max._2))
@@ -19,7 +20,15 @@ object Exp1 {
         println("min:%d (%d-%d)".format(min._3,min._1,min._2))
     
         //ハミング距離のヒストグラムを出力
+        println("--histgram--")
         toHist(results.map(_._3)).toSeq.sortWith(_._1 < _._1)foreach(s=>println(s._1+":"+s._2))
+
+        println("------------")
+        
+        println("1 (2)")
+        
+
+        
 
     } 
 

@@ -1,5 +1,5 @@
 import org.scalatest.FunSuite
-import main.scala.NumberPattern
+import scala.main.NumberPattern
 
 class NumberPatternSuite extends FunSuite{
 
