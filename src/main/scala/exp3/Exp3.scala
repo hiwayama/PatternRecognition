@@ -7,7 +7,6 @@ object Exp3 {
     val g = new Img(fileName)
 
     def main(args:Array[String]){
-        createTestPattern(100,100,25)
      
         val t = new Img("./src/pattern25.pgm")    
         
@@ -25,15 +24,15 @@ object Exp3 {
         val range:Seq[Int] = (0 until g.x*g.y).filter(i=>i%(g.x) < g.x-t.x && i/(g.y) < g.y-t.y)
 
         val M = t.x    
-        val results:Seq[(Int,Double)] = range.map(r=>(r , corr(r%g.x,r/g.y,g,t,M)))
+        val results = range.par.map(r=>(r , corr(r%g.x,r/g.y,g,t,M)))
         results.maxBy(_._2)
     }
 
     /**
     * パターン画像生成用メソッド
     */
-    def createTestPattern(m:Int,n:Int,size:Int){
-        val pw = new java.io.PrintWriter("./src/pattern"+size+".pgm")
+    def createTestPattern(fileName:String,m:Int,n:Int,size:Int){
+        val pw = new java.io.PrintWriter("./src/"+fileName)
         
         val header = "p2\n%d %d\n%d\n".format(size,size,255)
         val stream:StringBuilder = g.outputTestPics(m,n,size).foldLeft(new StringBuilder("")){(s,v)=>
@@ -81,7 +80,7 @@ class Img(fileName:String) {
     * @param size テンプレート画像の一辺のサイズ
     */
     def outputTestPics(m:Int,n:Int,size:Int):Array[Int]={
-        val range = (m until m+size).map(j=>(n until n+size).map(i=>pics(j*x+i).toInt).toArray).toArray.flatten
+        val range = (n until n+size).map(i=>(m until m+size).map(j=>pics(i*x+j).toInt).toArray).toArray.flatten
         range
     }
     
