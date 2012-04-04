@@ -6,12 +6,6 @@ import scala.main.Img
 class Exp3Suite extends FunSuite{
 
     val lena = new Img("./src/lena256.pgm")
-	
-    test(""" test Img header """){
-        assert(lena.x == 256)
-        assert(lena.y == 256)
-        assert(lena.pics.size == 256*256)
-    }
 
     test(""" test Pattern Recognition (100,100)~(125,125)"""){
         val (x,y,size) = (100,100,25)

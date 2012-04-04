@@ -2,7 +2,7 @@ import org.scalatest.FunSuite
 
 import scala.main.Img
 
-class Exp3Suite extends FunSuite{
+class ImgSuite extends FunSuite{
 
     val lena = new Img("./src/lena256.pgm")
 	
