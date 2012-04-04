@@ -19,7 +19,7 @@ object NumberPattern {
     }
     
     //Intに変換
-    val pattern:Map[String,Pattern] = obj.map(m=>(m._1,m._2.map(d=>d.toInt)))
+    val pattern:Map[String,Pattern] = obj.map(m=>m._1->m._2.map(d=>d.toInt))
 
     //桁数の上限
     val maxPlace = pattern("0").size

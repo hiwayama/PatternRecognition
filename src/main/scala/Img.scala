@@ -29,7 +29,12 @@ class Img(fileName:String) {
     def apply(place:Int):Int={
         this.pics(place).toInt
     }
-    
+
+    def createHistgram:Map[Int,Int]={
+        val map = scala.collection.mutable.Map[Int,Int]()
+        pics.foreach(l=>map(l.toInt)=map.getOrElse(l,0)+1)
+        map.toMap
+    }    
 }
 
 

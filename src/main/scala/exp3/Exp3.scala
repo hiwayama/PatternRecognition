@@ -27,7 +27,7 @@ object Exp3 {
         val range:Seq[Int] = (0 until g.x*g.y).filter(i=>i%(g.x) < g.x-t.x && i/(g.y) < g.y-t.y)
 
         val M = t.x    
-        val results = range.par.map(r=>(r , corr(r%g.x,r/g.y,g,t,M)))
+        val results = range.par.map(r=>r -> corr(r%g.x,r/g.y,g,t,M))
         results.maxBy(_._2)
     }
 
