@@ -1,6 +1,7 @@
 import org.scalatest.FunSuite
 
-import scala.main.exp3.{Exp3,Img}
+import scala.main.exp3.Exp3
+import scala.main.Img
 
 class Exp3Suite extends FunSuite{
 
