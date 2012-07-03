@@ -1,5 +1,8 @@
 package main.scala
 
+/**
+* 二次元配列に行列演算を追加したラッパークラス
+*/
 class Matrix(arrays:Array[Array[Double]]) {
 
     private val elems = arrays 
