@@ -19,7 +19,7 @@ object Exp5 extends Distribution {
       println(paramsUpdate())
     //}
   }
-  
+
   def mixNormal(x:Double,a:Double, m1:Double, m2:Double, s1:Double,s2:Double):Double={
 
     a*normalDist(x,m1,s1) + (1-a)*normalDist(x,m2,s2)

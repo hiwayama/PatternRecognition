@@ -12,7 +12,6 @@ object Exp4 extends Distribution {
         println(calcKLDivergence(dists(0),dists(2)))
         println(calcKLDivergence(dists(1),dists(2)))
     }
-
 }
 
 // vim: set ts=4 sw=4 et:
