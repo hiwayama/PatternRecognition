@@ -1,61 +1,63 @@
-package exp5
+package scala.main.exp5
 
-import scala.io.Source
+import scala.main.{Img,Distribution}
+import scala.collection.mutable.HashMap
 
-object Exp5 {
-    
-    // 課題4で生成した濃度分布ファイルの名前
-    val inputFileNames = Array("dist-", ".txt")
-    
-    def main(args:Array[String]){
-        // 課題4で生成した濃度分布ファイルの読込
-        val dists = (0 to 2).map{i=>
-            Source.fromFile(inputFileNames(0)+i.toString+inputFileNames(1)).getLines.toList.map{l=>
-                 val arr = l.split(" ")
-                 (arr(0).toDouble, arr(1).toDouble)
-            }
-        }
+object Exp5 extends Distribution {
 
-        dists.foreach{dist=>
-//            fitting(dist)
-        }
+  val dists = imgs.map(toDensityDist)
+
+  def main(args:Array[String]) {
+    // 各画像の濃度分布の計算     
+    val dist = dists(0)
+    println(dist)
+    //dists.foreach{dist=>
+      var paramsUpdate = fit(dist);
+      for(i<- 0 until 3){
+        paramsUpdate()
+      }
+      println(paramsUpdate())
+    //}
+  }
+  
+  def mixNormal(x:Double,a:Double, m1:Double, m2:Double, s1:Double,s2:Double):Double={
+
+    a*normalDist(x,m1,s1) + (1-a)*normalDist(x,m2,s2)
+
+  }
+
+  def fit(dist:Seq[(Double,Double)]) = {
+    // 値の初期化
+    val d = dist
+    var (a, m1, m2, s1, s2) = (0.5, 0.5, 0.5, 0.5, 0.5)
+    () => {
+      //値の更新式
+      a += dist.map{p=>
+        p._2*(normalDist(p._1,m1,s1)-normalDist(p._1,m2,s2)) / 
+          mixNormal(p._1,a,m1,m2,s1,s2)
+      }.sum[Double]
+
+      m1 += dist.map{p=>
+        p._2 * (p._1-m1)*a/s1*normalDist(p._1,m1,s1) /
+        mixNormal(p._1,a,m1,m2,s1,s2)
+      }.sum[Double]
+      
+      m2 += dist.map{p=>
+        p._2 * (p._1-m2)*(1-a)/s2*normalDist(p._1,m2,s2) /
+        mixNormal(p._1,a,m1,m2,s1,s2)
+      }.sum[Double]
+      
+      s1 += dist.map{p=>
+        p._2 * normalDist(p._1,m1,s1)/(-s1)*(1.0-(p._1-m1)*(p._1-m2)/s1/s1) / mixNormal(p._1,a,m1,m2,s1,s2)
+      }.sum[Double]
+
+      s2 += dist.map{p=>
+        p._2 * normalDist(p._1,m2,s2)/(-s2)*(1.0-(p._1-m2)*(p._1-m2)/s2/s2) / mixNormal(p._1,a,m1,m2,s1,s2)
+      }.sum[Double]
+      println((a,m1,m2,s1,s2))
+      (a,m1,m2,s1,s2)
     }
+  }
 
-    def fitting(dist:Array[(Double,Double)]) {
-        // パラメータの初期値を決定
-        var (a,m1,m2,sigma1,sigma2) = (0.5,1.0,1.0,1.0,1.0)
 
-        // ループを回してパラメータを更新 
-        val loopLimit = 100
-        (0 until loopLimit).foreach{n=>
-            val newParams = updateParams(dist,a,m1,m2,sigma1,sigma2)
-            a = newParams._1
-            m1 = newParams._2
-            m2 = newParams._3
-            sigma1 = newParams._4
-            sigma2 = newParams._5
-            
-        }
-        
-        // パラメータを出力        
-        println("params:"+a+" "+m1+" "+m2+" "+sigma1+" "+sigma2)
-    }
-
-    // パラメータの更新    
-    def updateParams(dist:Array[(Double,Double)]a:Double,m1:Double,m2:Double,sigma1:Double,sigma2:Double):(Double,Double,Double,Double,Double)={
-
-/*        val newA = a + dist.foldLeft(0.0){(sum,pair)=>
-                sum + pair._2*(normDist(pair._1,m1,sigma1)-normDist(pair._1,m2,sigma2))/
-        }
-
-        
-  */      
-    }
-
-    // 正規分布
-    def normDist(x:Double,m:Double,sigma:Double):Double={
-        StrictMath.exp(-(x-m)*(x-m)/(2.0*sigma*sigma))/StrictMath.sqrt(2.0*StrictMath.PI*sigma*sigma)
-    }
 }
-
-// vim: set ts=4 sw=4 et:

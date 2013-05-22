@@ -4,11 +4,12 @@ import scala.main.Matrix
 
 class MatrixSuite extends FunSuite{
 
-    val test_array1 = new Matrix(Array(Array(1,2),Array(3,4)))
-    val test_array2 = new Matrix(Array(Array(3,4),Array(1,2)))
-    val result_array = new Matrix(Array(Array(5,8),Array(7,20)))
+    val testArray1 = new Matrix(Array(Array(1,2),Array(3,4)))
+    val testArray2 = new Matrix(Array(Array(3,4),Array(1,2)))
+    val resultArray = new Matrix(Array(Array(5.0,8.0),Array(13.0,20.0)))
+    
     test(""" test Matrix mat1 * mat2"""){
-        assert(test_array1 * test_array2,result_array)
+        assert(resultArray.equals(testArray1 * testArray2))
     }
 
 }
